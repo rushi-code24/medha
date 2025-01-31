@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>AAC Communication Board</title>
+
+    
+    <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  
+  <!-- responsive style -->
+  <link href="css/responsive.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Reduced to 3 per row for larger buttons */
+            gap: 15px;
+            max-width: 900px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        .button {
+            background-color: #ffcccc;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 140px; /* Increased button height */
+            width: 180px;  /* Increased button width */
+        }
+
+        .button img {
+            width: 60px;  /* Increased image size */
+            height: 60px;
+            margin-bottom: 8px;
+        }
+
+        .button:active {
+            background-color: #ff9999;
+        }
+
+        .controls {
+            margin: 30px;
+        }
+
+        .controls button {
+            padding: 15px 25px;
+            margin: 10px;
+            font-size: 22px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+        }
+
+        .speak {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .clear {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .delete {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        /* Bigger text output */
+        h3 {
+            font-size: 28px;
+            margin-top: 20px;
+        }
+
+        #output {
+            font-size: 26px;
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-top: 10px;
+            min-height: 40px;
+        }
+
+        .back-button {
+    background-color: #007bff;  /* Blue color */
+    color: white;
+    font-size: 20px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+}
+
+.back-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+.back-button:active {
+    background-color: #004494; /* Even darker on click */
+    transform: scale(0.95);
+}
+
+    </style>
+</head>
+<body>
+
+    
+
+    <div class="container">
+        <div class="d-flex justify-content-start my-3">
+            <button onclick="goBack()" class="back-button">← Back</button>
+        </div>
+    </div>
+    
+
+    <h2 style="font-size: 32px;">AAC Communication Board</h2>
+    
+    <div class="board" id="board">
+        <button class="button" onclick="addText('Yes')"><img src="yes.png" alt="">Yes</button>
+        <button class="button" onclick="addText('No')"><img src="no.png" alt="">No</button>
+        <button class="button" onclick="addText('Stop')"><img src="stop.png" alt="">Stop</button>
+        <button class="button" onclick="addText('I need help')"><img src="help.png" alt="">I Need Help</button>
+        <button class="button" onclick="addText('I want to go to the toilet')"><img src="toilet.png" alt="">Toilet</button>
+        <button class="button" onclick="addText('Call 108')"><img src="call.png" alt="">Call 108</button>
+        <button class="button" onclick="addText('I am done')"><img src="done.png" alt="">All Done</button>
+        <button class="button" onclick="addText('I want to spell')"><img src="spell.png" alt="">Spell</button>
+    </div>
+
+    <h3>Selected Text: <span id="output"></span></h3>
+
+    <div class="controls">
+        <button class="speak" onclick="speakText()">🔊 Speak</button>
+        <button class="delete" onclick="deleteLast()">⬅ Delete</button>
+        <button class="clear" onclick="clearText()">❌ Clear</button>
+    </div>
+
+    <footer class="footer_section">
+        <div class="container">
+          <p>
+            &copy; <span id="displayDateYear"></span> All Rights Reserved By
+            <a href=""> SAVITRU.Co.GDG</a>
+          </p>
+        </div>
+      </footer>
+
+    <script>
+        let output = document.getElementById("output");
+
+        function addText(text) {
+            output.textContent += (output.textContent ? " " : "") + text;
+        }
+
+        function clearText() {
+            output.textContent = "";
+        }
+
+        function deleteLast() {
+            let words = output.textContent.split(" ");
+            words.pop();
+            output.textContent = words.join(" ");
+        }
+
+        function speakText() {
+            let text = output.textContent;
+            if (text) {
+                let utterance = new SpeechSynthesisUtterance(text);
+                speechSynthesis.speak(utterance);
+            }
+        }
+    </script>
+ 
+<script>
+    function goBack() {
+        window.history.back();
+    }
+  </script>
+</body>
+</html>
